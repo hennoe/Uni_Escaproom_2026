@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cyber Angriff</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background: radial-gradient(circle at center, #1b1040 0%, #090212 100%);
+    color:white;
+    min-height:100vh;
+}
+
+/* MATRIX GRID */
+
+.matrix{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background-image:
+    linear-gradient(rgba(0,255,170,0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,255,170,0.08) 1px, transparent 1px);
+    background-size:40px 40px;
+    animation:moveGrid 8s linear infinite;
+    z-index:-1;
+}
+
+@keyframes moveGrid{
+    from{
+        transform:translateY(0);
+    }
+    to{
+        transform:translateY(40px);
+    }
+}
+
+/* TITEL */
+
+header{
+    text-align:center;
+    padding-top:60px;
+    font-size:3rem;
+    font-weight:bold;
+    color:#00ffd5;
+    text-shadow:
+    0 0 10px #00ffd5,
+    0 0 20px #00ffd5,
+    0 0 40px #00ffd5;
+    animation:glitch 1s infinite;
+    word-wrap: break-word;
+}
+
+@media(min-width: 768px) {
+    header {
+        font-size: 4rem;
+    }
+}
+
+@keyframes glitch{
+    0%{transform:translate(0);}
+    20%{transform:translate(-2px,2px);}
+    40%{transform:translate(2px,-2px);}
+    60%{transform:translate(-2px,0);}
+    80%{transform:translate(2px,2px);}
+    100%{transform:translate(0);}
+}
+
+.subtitle{
+    text-align:center;
+    color:#cfcfcf;
+    margin-top:15px;
+    margin-bottom:60px;
+    padding: 0 15px;
+}
+
+/* LEVELS */
+
+.levels{
+    display:flex;
+    justify-content:center;
+    gap:30px;
+    flex-wrap:wrap;
+    padding-bottom:50px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.card{
+    width:300px;
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(0,255,213,0.25);
+    border-radius:20px;
+    padding:35px;
+    backdrop-filter:blur(10px);
+    transition:0.3s;
+    box-shadow:0 0 20px rgba(0,255,213,0.15);
+}
+.card2{
+    width: 90% ;
+    max-width: 800px;
+    margin: auto;
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(0,255,213,0.25);
+    border-radius:20px;
+    padding:25px;
+    backdrop-filter:blur(10px);
+    transition:0.3s;
+    box-shadow:0 0 20px rgba(0,255,213,0.15);
+}
+@media(min-width: 768px) {
+    .card2 {
+        padding: 35px;
+    }
+}
+.card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 0 30px rgba(0,255,213,0.4);
+}
+
+.card h2{
+    margin-bottom:15px;
+    color:#00ffd5;
+}
+
+.card p{
+    color:#d7d7d7;
+    line-height:1.6;
+    margin-bottom:25px;
+}
+
+button{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    background:#00ffd5;
+    color:black;
+    font-size:1rem;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    background:#00c2a3;
+    transform:scale(1.03);
+}
+
+/* LEVEL SEITE */
+
+#levelPage{
+    display:none;
+    padding:20px;
+}
+
+@media(min-width: 768px) {
+    #levelPage {
+        padding: 40px;
+    }
+}
+
+.levelBox{
+    max-width:1300px;
+    margin:auto;
+    background:rgba(255,255,255,0.05);
+    border-radius:20px;
+    padding:20px;
+    border:1px solid rgba(0,255,213,0.2);
+}
+
+@media(min-width: 768px) {
+    .levelBox {
+        padding: 35px;
+    }
+}
+
+.levelBox h1{
+    color:#00ffd5;
+    margin-bottom:20px;
+}
+
+.statements{
+    line-height:1.8;
+    margin-top:20px;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 15px;
+    border-radius: 10px;
+    border-left: 3px solid #00ffd5;
+}
+
+/* TABELLE MOBILE RESPONSIVE */
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+    margin-top: 40px;
+    background: rgba(0,0,0,0.2);
+    border-radius: 10px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width: 600px; /* Garantiert Lesbarkeit auf Handys via Scroll */
+}
+
+th,td{
+    border:1px solid rgba(255,255,255,0.2);
+    padding:12px;
+    text-align:center;
+}
+
+th{
+    background:#00ffd5;
+    color:black;
+}
+
+.highlight{
+    color:#00ffd5;
+    font-weight:bold;
+}
+
+/* BACK BUTTON */
+.backBtn{
+    margin-top:35px;
+    width:100%;
+    max-width:250px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="matrix"></div>
+
+<div id="menu">
+
+<header>CYBER ANGRIFF</header>
+
+<div class="card2">
+<p style="line-height: 1.6;"> 
+17:00 Uhr – Wiese hinter dem HSZ<br><br>
+Der Bass der Band Tapy dröhnt in eurer Magengrube, während der Geruch von Grillkohle und Freiheit über den Campus weht. Doch für euch ist der Dies Academicus alles andere als entspannt. Ihr habt eine Mission.<br><br>
+Ihr entdeckt den Security-Mitarbeiter am Rande der Absperrung. Er wirkt sichtlich gestresst und reibt sich die Schläfen.<br><br>
+„Und?“, fragt ihr mit erhobener Stimme, um die Musik zu übertönen. „Gibt es Fortschritte bei den fünf Verdächtigen?“<br><br>
+Er schüttelt den Kopf und zieht ein zerknittertes Protokoll aus der Tasche. „Das Chaos hier ist perfekt. Wir wissen, dass es fünf Leute waren, die sich in die Systeme gehackt haben. Jeder saß an einem Platz mit einer anderen Sicherheitsstufe (Rot, Grün, Gelb, Blau, Weiß), nutzte ein anderes Gerät (Notebook, Tablet, PC, Serverterminal, Smartphone) und eine andere Verbindung (VPN, Proxy, WLAN, LAN, Mobilfunk).“<br><br>
+Er deutet auf eine Liste mit Beweismitteln, die sichergestellt wurden: „Wir haben am Tatort fünf markante Spuren gefunden: Eine abgefeuerte Konfetti-Kanone, eine verschüttete Mate, eine leere Pizzaschachtel, überall Glitzer-Sticker und eine Zeitschrift mit lustigen Katzenfotos.“<br><br>
+„Immerhin eine gute Nachricht gibt es“, fügt er hinzu und zeigt auf ein Überwachungsvideo, wo eine nicht identifizierbare Person im Kapuzen Hoodie lachend vor der Katzenzeitschrift saß. „Die Person mit den Katzenfotos ist definitiv unschuldig. Wir haben sie die ganze Zeit im Blick gehabt: Sie war so verzückt von den flauschigen Kätzchen, dass sie keine Sekunde auf den Monitor geschaut hat – sie hatte wortwörtlich keine Hand frei für den Hack. Wir müssen nur noch herausfinden, wer das war.“<br><br>
+Bevor ihr weiterfragen könnt, werdet ihr von der Gruppe Studierender mitgezogen. In Raum FOE 102 angekommen, schnappt ihr zwischen tanzenden Menschen entscheidenden Aussagen auf:
+</p>
+</div>
+
+<p class="subtitle">
+Löse das Cyber-Rätsel und finde die Zusammenhänge.
+</p>
+
+<div class="levels">
+
+<div class="card">
+<h2>🟢🟢 sehr sehr Einfach</h2>
+<p>
+Hier hat jemand die Aussagen sortiert und sehr viele Zeugen befragt. 
+Sehr schnell zu lösen. Falls du kein Bock mehr hast. 
+</p>
+<button onclick="openLevel('easyeasy')">Starten</button>
+</div>
+
+<div class="card">
+<h2>🟢 Einfach</h2>
+<p>
+Hier hat jemand die Aussagen sortiert und noch ein paar Zusatz Aussagen gesammelt. 
+Ideal zum Einstieg, in die Rätsel Welt. 
+</p>
+<button onclick="openLevel('easy')">Starten</button>
+</div>
+
+<div class="card">
+<h2>🟡 Mittel</h2>
+<p>
+Hier hat jemand die Aussagen für euch sortiert, so dass es leichter zu lösen ist. 
+Nutze Logik und Aussagen.
+</p>
+<button onclick="openLevel('medium')">Starten</button>
+</div>
+
+<div class="card">
+<h2>🔴 Schwer</h2>
+<p>
+Alle Aussagen durcheinander.
+Keine Tabelle vorhanden.
+Achtung!! Nur zu empfelen, wenn ihr geübt in Logik Puzzeln seid und noch ausreichend Zeit habt! 
+</p>
+<button onclick="openLevel('hard')">Starten</button>
+</div>
+
+</div>
+
+</div>
+
+<div id="levelPage">
+<div class="levelBox" id="content"></div>
+</div>
+
+<script>
+
+function openLevel(level){
+
+document.getElementById("menu").style.display = "none";
+document.getElementById("levelPage").style.display = "block";
+window.scrollTo(0, 0);
+
+const content = document.getElementById("content");
+
+if(level === "easyeasy"){
+
+content.innerHTML = `
+<h1>🟢🟢 Sehr sehr Einfach</h1>
+
+<div class="statements">
+<strong>Aussagen auf der Party:</strong><br>
+1. Beate arbeitet an Arbeitsplatz 1.<br>
+2. An Arbeitsplatz 3 ist der PC registriert.<br>
+3. Beate arbeitet neben dem Platz mit der Blauen Sicherheitsstufe.<br>
+4. Die Grüne Sicherheitsstufe ist direkt links von der Weißen.<br>
+5. Die Grüne Sicherheitsstufe hat ein Tablet.<br>
+5.1. An der Weißen Sicherheitstufe arbeitet Charlie. <br> 
+6. Patrik arbeitet am Platz mit der Roten Sicherheitsstufe.<br>
+6.1. Patrik arbeitet am PC. <br>
+7. Das Serverterminal nutzt einen Proxy.<br>
+8. Die Gelbe Sicherheitsstufe nutzt einen Proxy.<br>
+8.1. Die Rote Sicherheitsstufe ist nicht neben der Weißen. <br> 
+9. Das Serverterminal wurde neben dem Arbeitsplatz mit Mobilfunk genutzt.<br>
+10. LAN wird direkt neben Blau genutzt.<br>
+11. Harald loggte sich über WLAN ein.<br>
+11.1. Das WLAN wird vom Tablet aus genutzt. <br>
+11.2. Harald sitzt neben Patrik. <br>  
+12. Charlie arbeitete am Notebook.<br>
+12.1. Das Notbook hat Fettflecken von der Pizza. <br>
+13. Die leere Pizza Schachtel wurden beim VPN-Zugang hinterlassen.<br>
+14. Nina hinterließ Glitzer Sticker.<br>
+14.1. Nina nutzt das Smartphone. <br> 
+15. Die Mate-Spur wurde neben dem Arbeitsplatz mit dem Smartphone ausgeschüttet.<br>
+16. Die Person, die Mobilfunk genutzt hat, saß rechts neben der Person, die die Konfetti-Kanone abgefeuert hat.<br>
+Wer hat die Katzen Fotos angeschaut? 
+</div>
+
+<div class="table-container">
+<table>
+<tr>
+<th>Kategorie</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+</tr>
+<tr>
+<td><strong>A_Sicherheit</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>B_Name</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>C_Gerät</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>D_Verbindung</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>E_Spur</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+</div>
+
+<button class="backBtn" onclick="goBack()">⬅ Zurück</button> `; 
+
+}
+
+
+if(level === "easy"){
+
+content.innerHTML = `
+<h1>🟢 Einfach</h1>
+
+<div class="statements">
+<strong>Aussagen auf der Party:</strong><br>
+1. Beate arbeitet an Arbeitsplatz 1.<br>
+2. An Arbeitsplatz 3 ist der PC registriert.<br>
+3. Beate arbeitet neben dem Platz mit der Blauen Sicherheitsstufe.<br>
+4. Die Grüne Sicherheitsstufe ist direkt links von der Weißen.<br>
+5. Die Grüne Sicherheitsstufe hat ein Tablet.<br>
+5.1. An der Weißen Sicherheitstufe arbeitet Charlie. <br> 
+6. Patrik arbeitet am Platz mit der Roten Sicherheitsstufe.<br>
+7. Das Serverterminal nutzt einen Proxy.<br>
+8. Die Gelbe Sicherheitsstufe nutzt einen Proxy.<br>
+8.1. Die Rote Sicherheitsstufe ist nicht neben der Weißen. <br> 
+9. Das Serverterminal wurde neben dem Arbeitsplatz mit Mobilfunk genutzt.<br>
+10. LAN wird direkt neben Blau genutzt.<br>
+11. Harald loggte sich über WLAN ein.<br>
+11.1. Das WLAN wird vom Tablet aus genutzt. <br> 
+12. Charlie arbeitete am Notebook.<br>
+13. Die leere Pizza Schachtel wurden beim VPN-Zugang hinterlassen.<br>
+14. Nina hinterließ Glitzer Sticker.<br>
+15. Die Mate-Spur wurde neben dem Arbeitsplatz mit dem Smartphone ausgeschüttet.<br>
+16. Die Person, die Mobilfunk genutzt hat, saß rechts neben der Person, die die Konfetti-Kanone abgefeuert hat.<br>
+Wer hat die Katzen Fotos angeschaut? 
+</div>
+
+<div class="table-container">
+<table>
+<tr>
+<th>Kategorie</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+</tr>
+<tr>
+<td><strong>A_Sicherheit</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>B_Name</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>C_Gerät</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>D_Verbindung</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>E_Spur</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+</div>
+
+<button class="backBtn" onclick="goBack()">⬅ Zurück</button> `; 
+
+}
+
+if(level === "medium"){
+
+content.innerHTML = `
+<h1>🟡 Mittel</h1>
+<p>Hier sind alle Aussagen aufgelistet. Nutze die leere Tabelle, um die Zuordnungen Schritt für Schritt selbst zu erarbeiten.</p>
+
+<div class="statements">
+<strong>Aussagen auf der Party:</strong><br>
+1. Beate arbeitet an Arbeitsplatz 1.<br>
+2. An Arbeitsplatz 3 ist der PC registriert.<br>
+3. Beate arbeitet neben dem Platz mit der Blauen Sicherheitsstufe.<br>
+4. Die Grüne Sicherheitsstufe ist direkt links von der Weißen.<br>
+5. Die Grüne Sicherheitsstufe hat ein Tablet.<br>
+6. Patrik arbeitet am Platz mit der Roten Sicherheitsstufe.<br>
+7. Das Serverterminal nutzt einen Proxy.<br>
+8. Die Gelbe Sicherheitsstufe nutzt einen Proxy.<br>
+9. Das Serverterminal wurde neben dem Arbeitsplatz mit Mobilfunk genutzt.<br>
+10. LAN wird direkt neben Blau genutzt.<br>
+11. Harald loggte sich über WLAN ein.<br>
+12. Charlie arbeitete am Notebook.<br>
+13. Die leere Pizza Schachtel wurden beim VPN-Zugang hinterlassen.<br>
+14. Nina hinterließ Glitzer Sticker.<br>
+15. Die Mate-Spur wurde neben dem Arbeitsplatz mit dem Smartphone ausgeschüttet.<br>
+16. Die Person, die Mobilfunk genutzt hat, saß rechts neben der Person, die die Konfetti-Kanone abgefeuert hat.
+</div>
+
+<div class="table-container">
+<table>
+<tr>
+<th>Kategorie</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+</tr>
+<tr>
+<td><strong>A_Sicherheit</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>B_Name</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>C_Gerät</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>D_Verbindung</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>E_Spur</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+</div>
+
+<button class="backBtn" onclick="goBack()">⬅ Zurück</button>
+`;
+
+}
+
+if(level === "hard"){
+
+content.innerHTML = `
+<h1>🔴 Schwer</h1>
+<div class="statements" style="font-size: 1.2rem; text-align: center; border-left: 3px solid #ff0055; padding: 30px 15px;">
+    <strong>Hinweis:</strong><br><br>
+    Schau dich im Raum um und sammel die Aussagen, ermittle die Lösung.
+</div>
+
+<button class="backBtn" onclick="goBack()">⬅ Zurück</button>
+`;
+
+}
+
+}
+
+function goBack(){
+document.getElementById("menu").style.display = "block";
+document.getElementById("levelPage").style.display = "none";
+window.scrollTo(0, 0);
+}
+
+</script>
+
+</body>
+</html>

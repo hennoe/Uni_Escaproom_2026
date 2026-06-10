@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cyber Attack</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background: radial-gradient(circle at center, #1b1040 0%, #090212 100%);
+    color:white;
+    min-height:100vh;
+}
+
+/* MATRIX GRID */
+
+.matrix{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background-image:
+    linear-gradient(rgba(0,255,170,0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,255,170,0.08) 1px, transparent 1px);
+    background-size:40px 40px;
+    animation:moveGrid 8s linear infinite;
+    z-index:-1;
+}
+
+@keyframes moveGrid{
+    from{
+        transform:translateY(0);
+    }
+    to{
+        transform:translateY(40px);
+    }
+}
+
+/* TITLE */
+
+header{
+    text-align:center;
+    padding-top:60px;
+    font-size:3rem;
+    font-weight:bold;
+    color:#00ffd5;
+    text-shadow:
+    0 0 10px #00ffd5,
+    0 0 20px #00ffd5,
+    0 0 40px #00ffd5;
+    animation:glitch 1s infinite;
+    word-wrap: break-word;
+}
+
+@media(min-width: 768px) {
+    header {
+        font-size: 4rem;
+    }
+}
+
+@keyframes glitch{
+    0%{transform:translate(0);}
+    20%{transform:translate(-2px,2px);}
+    40%{transform:translate(2px,-2px);}
+    60%{transform:translate(-2px,0);}
+    80%{transform:translate(2px,2px);}
+    100%{transform:translate(0);}
+}
+
+.subtitle{
+    text-align:center;
+    color:#cfcfcf;
+    margin-top:15px;
+    margin-bottom:60px;
+    padding: 0 15px;
+}
+
+/* LEVELS */
+
+.levels{
+    display:flex;
+    justify-content:center;
+    gap:30px;
+    flex-wrap:wrap;
+    padding-bottom:50px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.card{
+    width:300px;
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(0,255,213,0.25);
+    border-radius:20px;
+    padding:35px;
+    backdrop-filter:blur(10px);
+    transition:0.3s;
+    box-shadow:0 0 20px rgba(0,255,213,0.15);
+}
+.card2{
+    width: 90% ;
+    max-width: 800px;
+    margin: auto;
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(0,255,213,0.25);
+    border-radius:20px;
+    padding:25px;
+    backdrop-filter:blur(10px);
+    transition:0.3s;
+    box-shadow:0 0 20px rgba(0,255,213,0.15);
+}
+@media(min-width: 768px) {
+    .card2 {
+        padding: 35px;
+    }
+}
+.card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 0 30px rgba(0,255,213,0.4);
+}
+
+.card h2{
+    margin-bottom:15px;
+    color:#00ffd5;
+}
+
+.card p{
+    color:#d7d7d7;
+    line-height:1.6;
+    margin-bottom:25px;
+}
+
+button{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    background:#00ffd5;
+    color:black;
+    font-size:1rem;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    background:#00c2a3;
+    transform:scale(1.03);
+}
+
+/* LEVEL PAGE */
+
+#levelPage{
+    display:none;
+    padding:20px;
+}
+
+@media(min-width: 768px) {
+    #levelPage {
+        padding: 40px;
+    }
+}
+
+.levelBox{
+    max-width:1300px;
+    margin:auto;
+    background:rgba(255,255,255,0.05);
+    border-radius:20px;
+    padding:20px;
+    border:1px solid rgba(0,255,213,0.2);
+}
+
+@media(min-width: 768px) {
+    .levelBox {
+        padding: 35px;
+    }
+}
+
+.levelBox h1{
+    color:#00ffd5;
+    margin-bottom:20px;
+}
+
+.statements{
+    line-height:1.8;
+    margin-top:20px;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 15px;
+    border-radius: 10px;
+    border-left: 3px solid #00ffd5;
+}
+
+/* TABLE MOBILE RESPONSIVE */
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+    margin-top: 40px;
+    background: rgba(0,0,0,0.2);
+    border-radius: 10px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width: 600px; /* Guarantees readability on mobile via scroll */
+}
+
+th,td{
+    border:1px solid rgba(255,255,255,0.2);
+    padding:12px;
+    text-align:center;
+}
+
+th{
+    background:#00ffd5;
+    color:black;
+}
+
+.highlight{
+    color:#00ffd5;
+    font-weight:bold;
+}
+
+/* BACK BUTTON */
+.backBtn{
+    margin-top:35px;
+    width:100%;
+    max-width:250px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="matrix"></div>
+
+<div id="menu">
+
+<header>CYBER ATTACK</header>
+
+<div class="card2">
+<p style="line-height: 1.6;"> 
+5:00 PM – Meadow behind the HSZ<br><br>
+The bass from the band Tapy vibrates in your chest, while the smell of charcoal and freedom drifts across the campus. But for you, this Dies Academicus is anything but relaxing. You have a mission.<br><br>
+You spot the security guard at the edge of the barrier. He looks visibly stressed, rubbing his temples.<br><br>
+"Any progress?" you ask, raising your voice to be heard over the music. "Do we have updates on the five suspects?"<br><br>
+He shakes his head and pulls a crumpled report out of his pocket. "It's absolute chaos here. We know it was five people who hacked into the systems. Each sat at a station with a different security level (Red, Green, Yellow, Blue, White), used a different device (Notebook, Tablet, PC, Server Terminal, Smartphone), and a different connection (VPN, Proxy, WLAN, LAN, Cellular)."<br><br>
+He points to a list of secured evidence: "We found five distinct clues at the scene: a fired confetti cannon, a spilled Mate, an empty pizza box, glitter stickers everywhere, and a magazine with funny cat pictures."<br><br>
+"There's at least one piece of good news," he adds, pointing to a surveillance video showing an unidentifiable person in a hooded sweatshirt laughing while looking at the cat magazine. "The person with the cat pictures is definitely innocent. We had them on camera the entire time: they were so captivated by the fluffy kittens that they didn't look at the monitor for a single second – they literally didn't have a hand free for the hack. We just need to figure out who that was."<br><br>
+Before you can ask any further questions, you are pulled away by a group of students. Arriving in room FOE 102, you catch crucial statements amidst the dancing crowd:
+</p>
+</div>
+
+<p class="subtitle">
+Solve the cyber riddle and find the connections.
+</p>
+
+<div class="levels">
+
+<div class="card">
+<h2>🟢🟢 Very Very Easy</h2>
+<p>
+Someone sorted the statements and interviewed a lot of witnesses. 
+Very quick to solve. In case you don't feel like a heavy challenge. 
+</p>
+<button onclick="openLevel('easyeasy')">Start</button>
+</div>
+
+<div class="card">
+<h2>🟢 Easy</h2>
+<p>
+Someone sorted the statements and gathered a few additional clues. 
+Ideal for getting started in the world of riddles. 
+</p>
+<button onclick="openLevel('easy')">Start</button>
+</div>
+
+<div class="card">
+<h2>🟡 Medium</h2>
+<p>
+Someone sorted the statements for you to make it easier to solve. 
+Use logic and the clues.
+</p>
+<button onclick="openLevel('medium')">Start</button>
+</div>
+
+<div class="card">
+<h2>🔴 Hard</h2>
+<p>
+All statements are mixed up. 
+No table provided. 
+Caution!! Only recommended if you are experienced with logic puzzles and have enough time left! 
+</p>
+<button onclick="openLevel('hard')">Start</button>
+</div>
+
+</div>
+
+</div>
+
+<div id="levelPage">
+<div class="levelBox" id="content"></div>
+</div>
+
+<script>
+
+function openLevel(level){
+
+document.getElementById("menu").style.display = "none";
+document.getElementById("levelPage").style.display = "block";
+window.scrollTo(0, 0);
+
+const content = document.getElementById("content");
+
+if(level === "easyeasy"){
+
+content.innerHTML = `
+<h1>🟢🟢 Very Very Easy</h1>
+
+<div class="statements">
+<strong>Party Statements:</strong><br>
+1. Beate works at workstation 1.<br>
+2. The PC is registered at workstation 3.<br>
+3. Beate works next to the station with the Blue security level.<br>
+4. The Green security level is directly to the left of the White one.<br>
+5. The Green security level has a tablet.<br>
+5.1. Charlie works at the White security level.<br> 
+6. Patrik works at the station with the Red security level.<br>
+6.1. Patrik works on the PC.<br>
+7. The server terminal uses a proxy.<br>
+8. The Yellow security level uses a proxy.<br>
+8.1. The Red security level is not next to the White one.<br> 
+9. The server terminal was used next to the workstation using cellular data.<br>
+10. LAN is used directly next to Blue.<br>
+11. Harald logged in via WLAN.<br>
+11.1. The WLAN is used from the tablet.<br>
+11.2. Harald sits next to Patrik.<br>  
+12. Charlie worked on the notebook.<br>
+12.1. The notebook has grease stains from pizza.<br>
+13. The empty pizza box was left at the VPN access point.<br>
+14. Nina left glitter stickers.<br>
+14.1. Nina uses the smartphone.<br> 
+15. The Mate trail was spilled next to the workstation with the smartphone.<br>
+16. The person who used cellular data sat to the right of the person who fired the confetti cannon.<br>
+Who looked at the cat pictures? 
+</div>
+
+<div class="table-container">
+<table>
+<tr>
+<th>Category</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+</tr>
+<tr>
+<td><strong>A_Security</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>B_Name</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>C_Device</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>D_Connection</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>E_Clue</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+</div>
+
+<button class="backBtn" onclick="goBack()">⬅ Back</button> `; 
+
+}
+
+
+if(level === "easy"){
+
+content.innerHTML = `
+<h1>🟢 Easy</h1>
+
+<div class="statements">
+<strong>Party Statements:</strong><br>
+1. Beate works at workstation 1.<br>
+2. The PC is registered at workstation 3.<br>
+3. Beate works next to the station with the Blue security level.<br>
+4. The Green security level is directly to the left of the White one.<br>
+5. The Green security level has a tablet.<br>
+5.1. Charlie works at the White security level.<br> 
+6. Patrik works at the station with the Red security level.<br>
+7. The server terminal uses a proxy.<br>
+8. The Yellow security level uses a proxy.<br>
+8.1. The Red security level is not next to the White one.<br> 
+9. The server terminal was used next to the workstation using cellular data.<br>
+10. LAN is used directly next to Blue.<br>
+11. Harald logged in via WLAN.<br>
+11.1. The WLAN is used from the tablet.<br> 
+12. Charlie worked on the notebook.<br>
+13. The empty pizza box was left at the VPN access point.<br>
+14. Nina left glitter stickers.<br>
+15. The Mate trail was spilled next to the workstation with the smartphone.<br>
+16. The person who used cellular data sat to the right of the person who fired the confetti cannon.<br>
+Who looked at the cat pictures? 
+</div>
+
+<div class="table-container">
+<table>
+<tr>
+<th>Category</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+</tr>
+<tr>
+<td><strong>A_Security</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>B_Name</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>C_Device</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>D_Connection</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>E_Clue</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+</div>
+
+<button class="backBtn" onclick="goBack()">⬅ Back</button> `; 
+
+}
+
+if(level === "medium"){
+
+content.innerHTML = `
+<h1>🟡 Medium</h1>
+<p>All statements are listed here. Use the empty table to work out the connections step by step yourself.</p>
+
+<div class="statements">
+<strong>Party Statements:</strong><br>
+1. Beate works at workstation 1.<br>
+2. The PC is registered at workstation 3.<br>
+3. Beate works next to the station with the Blue security level.<br>
+4. The Green security level is directly to the left of the White one.<br>
+5. The Green security level has a tablet.<br>
+6. Patrik works at the station with the Red security level.<br>
+7. The server terminal uses a proxy.<br>
+8. The Yellow security level uses a proxy.<br>
+9. The server terminal was used next to the workstation using cellular data.<br>
+10. LAN is used directly next to Blue.<br>
+11. Harald logged in via WLAN.<br>
+12. Charlie worked on the notebook.<br>
+13. The empty pizza box was left at the VPN access point.<br>
+14. Nina left glitter stickers.<br>
+15. The Mate trail was spilled next to the workstation with the smartphone.<br>
+16. The person who used cellular data sat to the right of the person who fired the confetti cannon.
+</div>
+
+<div class="table-container">
+<table>
+<tr>
+<th>Category</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+</tr>
+<tr>
+<td><strong>A_Security</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>B_Name</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>C_Device</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>D_Connection</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>E_Clue</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+</div>
+
+<button class="backBtn" onclick="goBack()">⬅ Back</button>
+`;
+
+}
+
+if(level === "hard"){
+
+content.innerHTML = `
+<h1>🔴 Hard</h1>
+<div class="statements" style="font-size: 1.2rem; text-align: center; border-left: 3px solid #ff0055; padding: 30px 15px;">
+    <strong>Hint:</strong><br><br>
+    Look around the room, gather the statements, and find the solution.
+</div>
+
+<button class="backBtn" onclick="goBack()">⬅ Back</button>
+`;
+
+}
+
+}
+
+function goBack(){
+document.getElementById("menu").style.display = "block";
+document.getElementById("levelPage").style.display = "none";
+window.scrollTo(0, 0);
+}
+
+</script>
+
+</body>
+</html>
